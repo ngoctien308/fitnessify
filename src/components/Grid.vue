@@ -1,5 +1,7 @@
 <script setup>
   import { workoutProgram } from '@/utils';
+
+  const workoutTypes = ['Push', 'Pull', 'Legs'];
 </script>
 
 <template>
@@ -8,10 +10,16 @@
             :key="workoutIndex"
             v-for="(workoutItem, workoutIndex) in Object.keys(workoutProgram)" class="card-button plan-card">
             <div>
-                <p>Day {{ workoutIndex + 1 }}</p>
-                ICON
+                <p>Day {{ workoutIndex + 1 <= 9 ? `0${workoutIndex + 1}` : workoutIndex + 1 }}</p>
+                <i class="fa-solid fa-dumbbell" v-if="workoutIndex % 3 == 0" ></i>
+                <i class='fa-solid fa-weight-hanging' v-if="workoutIndex % 3 == 1"></i>
+                <i class="fa-solid fa-bolt" v-if="workoutIndex % 3 == 2"></i>
             </div>
-            <h3>TYPES</h3>
+            <h3>{{ workoutTypes[workoutIndex % workoutTypes.length] }}</h3>
+        </button>
+        <button class="card-button plan-card-reset">
+           <p>Reset</p>
+           <i class="fa-solid fa-rotate-left"></i>
         </button>
     </section>
 </template>
