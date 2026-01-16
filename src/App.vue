@@ -4,7 +4,7 @@
     import Workout from '@/components/pages/Workout.vue';
     import Layout from '@/components/layouts/Layout.vue';
 
-    const chosenPage = 2; // 1: Welcome, 2: Dashboard, 3: Workout
+    const chosenPage = 3; // 1: Welcome, 2: Dashboard, 3: Workout
 </script>
 
 <template>    
@@ -14,5 +14,3 @@
         <Workout v-if="chosenPage == 3" />
     </Layout>
 </template>
-
-<style scoped></style>
