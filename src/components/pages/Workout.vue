@@ -1,13 +1,21 @@
 <script setup>
-    import { workoutProgram, exerciseDescriptions } from '@/utils'; 
+    import { workoutProgram, exerciseDescriptions, workoutTypes } from '@/utils'; 
     import Portal from '../Portal.vue';
     import { computed, ref } from 'vue';
 
-    const selectedWorkout = 1;
-    const workoutType = ['Push', "Pull", 'Legs'];
+    const { selectedWorkout, handleSaveWorkout } = defineProps({
+        selectedWorkout: {
+            type: Number,
+            required: true
+        },
+        handleSaveWorkout: {
+            type: Function,
+            required: true
+        }
+    });
     const { warmup, workout } = workoutProgram[selectedWorkout];
     const chosenExercise = ref(null);
-    const chosenExerciseDescription = computed(() => exerciseDescriptions[chosenExercise.value]);
+    const chosenExerciseDescription = computed(() => exerciseDescriptions[chosenExercise.value] || 'Improve your overall form and technique with this exercise.');
 
     const closeModal = () => {
         chosenExercise.value = null;
@@ -30,7 +38,7 @@
                 <p>Day {{ selectedWorkout < 9 ? '0' + (selectedWorkout + 1) : (selectedWorkout + 1) }}</p>
                 <i class="fa-solid fa-dumbbell"></i>
             </div>
-            <h2>{{ workoutType[selectedWorkout % 3] }} Workout</h2>
+            <h2>{{ workoutTypes[selectedWorkout % 3] }} Workout</h2>
         </div>
         <div class="workout-grid">
             <h4 class="grid-name">Warmup</h4>
@@ -70,7 +78,7 @@
             </div>
         </div>
         <div class="card workout-btns">
-            <button>Save & Exit <i class="fa-solid fa-save"></i></button>
+            <button @click="handleSaveWorkout">Save & Exit <i class="fa-solid fa-save"></i></button>
             <button>Complete <i class="fa-solid fa-check"></i></button>
         </div>
     </section>

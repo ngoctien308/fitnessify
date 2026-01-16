@@ -449,3 +449,5 @@ export const gymHealthFacts = [
     "A proper warm-up increases blood flow and reduces injury risk.",
     "Skipping rest days can lead to overtraining, fatigue, and stalled progress."
 ]
+
+export const workoutTypes = ['Push', 'Pull', 'Legs'];

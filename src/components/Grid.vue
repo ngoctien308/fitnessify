@@ -1,12 +1,21 @@
 <script setup>
-  import { workoutProgram } from '@/utils';
+    import { workoutProgram } from '@/utils';
+    import { workoutTypes } from '@/utils';
 
-  const workoutTypes = ['Push', 'Pull', 'Legs'];
+    const { handleChangeWorkout } = defineProps({
+        handleChangeWorkout: {
+            type: Function,
+            required: true
+        }
+    });
 </script>
 
 <template>
     <section id="grid">
         <button 
+            @click="() => {
+                handleChangeWorkout(workoutIndex);
+            }"
             :key="workoutIndex"
             v-for="(workoutItem, workoutIndex) in Object.keys(workoutProgram)" class="card-button plan-card">
             <div>

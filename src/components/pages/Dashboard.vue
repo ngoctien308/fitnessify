@@ -4,6 +4,13 @@
     import Grid from '@/components/Grid.vue';
 
     const todaysFact = ref(gymHealthFacts[Math.floor(Math.random() * gymHealthFacts.length)]);
+
+    const { handleChangeWorkout } = defineProps({
+        handleChangeWorkout: {
+            type: Function,
+            required: true
+        }
+    });
 </script>
 
 <template>
@@ -15,7 +22,7 @@
             </div>
             <button>Start workout &rarr;</button>
         </div>
-        <Grid />
+        <Grid :handleChangeWorkout="handleChangeWorkout" />
     </section>
 </template>
 

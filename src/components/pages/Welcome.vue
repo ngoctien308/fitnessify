@@ -1,5 +1,10 @@
 <script setup>
-  
+    const { handleChangePage } = defineProps({
+        handleChangePage: {
+            type: Function,
+            required: true
+        }
+    });
 </script>
 
 <template>
@@ -21,7 +26,7 @@
             <h3>🔥 Your Challenge</h3>
             <p>Complete all the workouts and track your progress along the way!</p>
             <p>Do you accept?</p>
-            <button>Begin &rarr;</button>
+            <button @click="handleChangePage(2)">Begin &rarr;</button>
         </div>
     </section>
 </template>
