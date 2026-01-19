@@ -9,14 +9,20 @@
     const selectedPage = ref(1); // 1: Welcome, 2: Dashboard, 3: Workout
     const selectedWorkout = ref(-1); // -1 indicates no workout selected
     const defaultWorkoutData = {}; // Default structure for workout data
-    for(let workoutIndex in workoutProgram) {
-        defaultWorkoutData[workoutIndex] = {};
-        
-        for(let excercise of workoutProgram[workoutIndex].workout) {
-            defaultWorkoutData[workoutIndex][excercise.name] = '';
+    
+    const createDefaultWorkoutData = () => {
+        const defaultWorkoutData = {};
+        for(let workoutIndex in workoutProgram) {
+            defaultWorkoutData[workoutIndex] = {};
+            
+            for(let excercise of workoutProgram[workoutIndex].workout) {
+                defaultWorkoutData[workoutIndex][excercise.name] = '';
+            }
         }
-    }
-    const workoutData = ref(defaultWorkoutData); // To store workout progress    
+        return defaultWorkoutData;
+    };
+
+    const workoutData = ref(createDefaultWorkoutData()); // To store workout progress
 
     const isWorkoutComplete = computed(() => {        
         const currentWorkout = workoutData.value[selectedWorkout.value];
@@ -45,17 +51,12 @@
     };
 
     const handleSaveWorkout = () => {
-        localStorage.setItem('workoutData', JSON.stringify(workoutData.value));
-        // Logic to save workout progress
         selectedPage.value = 2; // Return to Dashboard after saving
         selectedWorkout.value = -1; // Reset selected workout
     };
 
     const handleResetWorkouts = () => {
-        workoutData.value = defaultWorkoutData;
-        localStorage.setItem('workoutData', JSON.stringify(workoutData.value));
-        console.log({defaultWorkoutData});
-        console.log('workoutdata after reset:', workoutData.value); 
+        workoutData.value = createDefaultWorkoutData();
         selectedPage.value = 2; // Return to Dashboard after resetting
         selectedWorkout.value = -1; // Reset selected workout
     };    
@@ -64,7 +65,12 @@
 <template>    
     <Layout :handleChangePage="handleChangePage">
         <Welcome :handleChangePage="handleChangePage" v-if="selectedPage == 1" />
-        <Dashboard :handleResetWorkouts="handleResetWorkouts" :firstInCompleteWorkoutIndex="firstInCompleteWorkoutIndex" :handleChangeWorkout="handleChangeWorkout" v-if="selectedPage == 2" />
+        <Dashboard
+            :handleResetWorkouts="handleResetWorkouts"
+            :firstInCompleteWorkoutIndex="firstInCompleteWorkoutIndex"
+            :handleChangeWorkout="handleChangeWorkout" 
+            v-if="selectedPage == 2" 
+        />
         <Workout
             :isWorkoutComplete="isWorkoutComplete"
             :workoutData="workoutData"
