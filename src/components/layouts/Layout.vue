@@ -1,10 +1,15 @@
 <script setup>
-  
+    const { handleChangePage } = defineProps({
+        handleChangePage: {
+            type: Function,
+            required: true
+        }
+    });
 </script>
 
 <template>
     <header>
-        <h1 class="text-gradient" style="text-transform: uppercase;">Fitnessify</h1>
+        <h1 class="text-gradient" style="text-transform: uppercase; cursor: pointer;" @click="() => handleChangePage(1)">Fitnessify</h1>
     </header>
     <main>
         <slot />

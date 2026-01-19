@@ -3,15 +3,11 @@
     import Portal from '../Portal.vue';
     import { computed, ref } from 'vue';
 
-    const { selectedWorkout, handleSaveWorkout } = defineProps({
-        selectedWorkout: {
-            type: Number,
-            required: true
-        },
-        handleSaveWorkout: {
-            type: Function,
-            required: true
-        }
+    const { selectedWorkout, handleSaveWorkout, workoutData, isWorkoutComplete } = defineProps({
+        selectedWorkout: Number,
+        handleSaveWorkout: Function,
+        workoutData: Object,
+        isWorkoutComplete: Boolean
     });
     const { warmup, workout } = workoutProgram[selectedWorkout];
     const chosenExercise = ref(null);
@@ -74,12 +70,12 @@
                 </div>
                 <p>{{ w.sets }}</p>
                 <p>{{ w.reps }}</p>
-                <input class="grid-weights" placeholder="14kg"/>
+                <input v-model="workoutData[selectedWorkout][w.name]" class="grid-weights" placeholder="14kg"/>
             </div>
         </div>
         <div class="card workout-btns">
             <button @click="handleSaveWorkout">Save & Exit <i class="fa-solid fa-save"></i></button>
-            <button>Complete <i class="fa-solid fa-check"></i></button>
+            <button :disabled="!isWorkoutComplete" @click="handleSaveWorkout">Complete<i class="fa-solid fa-check"></i></button>
         </div>
     </section>
 </template>

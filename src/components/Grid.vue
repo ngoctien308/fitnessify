@@ -2,17 +2,17 @@
     import { workoutProgram } from '@/utils';
     import { workoutTypes } from '@/utils';
 
-    const { handleChangeWorkout } = defineProps({
-        handleChangeWorkout: {
-            type: Function,
-            required: true
-        }
+    const { handleChangeWorkout, firstInCompleteWorkoutIndex, handleResetWorkouts } = defineProps({
+        handleChangeWorkout: Function,
+        firstInCompleteWorkoutIndex: Number,
+        handleResetWorkouts: Function
     });
 </script>
 
 <template>
     <section id="grid">
         <button 
+            :disabled="workoutIndex > firstInCompleteWorkoutIndex"
             @click="() => {
                 handleChangeWorkout(workoutIndex);
             }"
@@ -26,7 +26,7 @@
             </div>
             <h3>{{ workoutTypes[workoutIndex % workoutTypes.length] }}</h3>
         </button>
-        <button class="card-button plan-card-reset">
+        <button @click="handleResetWorkouts" class="card-button plan-card-reset">
            <p>Reset</p>
            <i class="fa-solid fa-rotate-left"></i>
         </button>

@@ -5,11 +5,10 @@
 
     const todaysFact = ref(gymHealthFacts[Math.floor(Math.random() * gymHealthFacts.length)]);
 
-    const { handleChangeWorkout } = defineProps({
-        handleChangeWorkout: {
-            type: Function,
-            required: true
-        }
+    const { handleChangeWorkout, firstInCompleteWorkoutIndex, handleResetWorkouts } = defineProps({
+        handleChangeWorkout: Function,
+        firstInCompleteWorkoutIndex: Number,
+        handleResetWorkouts: Function
     });
 </script>
 
@@ -20,9 +19,9 @@
             <div>
                 <p class="tip"><strong>Daily Tip</strong><br/>{{ todaysFact }}</p>
             </div>
-            <button>Start workout &rarr;</button>
+            <button @click="() => handleChangeWorkout(firstInCompleteWorkoutIndex)">Start workout &rarr;</button>
         </div>
-        <Grid :handleChangeWorkout="handleChangeWorkout" />
+        <Grid :handleResetWorkouts="handleResetWorkouts" :firstInCompleteWorkoutIndex="firstInCompleteWorkoutIndex" :handleChangeWorkout="handleChangeWorkout" />
     </section>
 </template>
 
