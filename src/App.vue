@@ -8,7 +8,6 @@
 
     const selectedPage = ref(1); // 1: Welcome, 2: Dashboard, 3: Workout
     const selectedWorkout = ref(-1); // -1 indicates no workout selected
-    const defaultWorkoutData = {}; // Default structure for workout data
     
     const createDefaultWorkoutData = () => {
         const defaultWorkoutData = {};
