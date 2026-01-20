@@ -3,7 +3,7 @@
     import Dashboard from '@/components/pages/Dashboard.vue';
     import Workout from '@/components/pages/Workout.vue';
     import Layout from '@/components/layouts/Layout.vue';
-    import { computed, ref } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import { workoutProgram } from './utils';
 
     const selectedPage = ref(1); // 1: Welcome, 2: Dashboard, 3: Workout
@@ -51,15 +51,25 @@
     };
 
     const handleSaveWorkout = () => {
+        localStorage.setItem('workoutData', JSON.stringify(workoutData.value));
         selectedPage.value = 2; // Return to Dashboard after saving
         selectedWorkout.value = -1; // Reset selected workout
     };
 
     const handleResetWorkouts = () => {
         workoutData.value = createDefaultWorkoutData();
+        localStorage.setItem('workoutData', JSON.stringify(workoutData.value));
         selectedPage.value = 2; // Return to Dashboard after resetting
         selectedWorkout.value = -1; // Reset selected workout
-    };    
+    };
+
+    onMounted(() => {
+        const savedWorkoutData = localStorage.getItem('workoutData');
+        if(savedWorkoutData) {
+            workoutData.value = JSON.parse(savedWorkoutData);
+            selectedPage.value = 2; // Go to Dashboard if data exists
+        }
+    })
 </script>
 
 <template>    
